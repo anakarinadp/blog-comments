@@ -1,13 +1,10 @@
 from django.db import models
 
-# En cas de besoin, vous êtes autorisé à rajouter des méthodes ou
-    # propriétés dans ce modèle.
-
 class Categorie(models.Model):
-    titre = models.CharField(max_length=100)
+    nom = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.titre
+        return self.nom
 
 class Article(models.Model):
     titre = models.CharField(max_length=100)
