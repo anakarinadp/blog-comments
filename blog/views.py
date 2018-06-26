@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 
 from .models import Article
+from .forms import CommentForm
 
 
 def accueil(request):
@@ -22,4 +23,11 @@ def lire_article(request, slug):
     """
     article = get_object_or_404(Article, slug=slug)
 
-    return render(request, 'blog/lire_article.html', {'article': article})
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            form = CommentForm()
+    return render(request, 'blog/lire_article.html', locals())
+

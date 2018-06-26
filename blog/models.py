@@ -20,11 +20,12 @@ class Article(models.Model):
     def __str__(self):
         return self.titre
 
-    
-
-
-
-
 
 class Comment(models.Model):
-    """ Modèle pour les commentaires. A vous de l'écrire ! """
+    """ Modèle pour les commentaires """
+    pseudo = models.CharField(max_length=42)
+    email = models.EmailField(max_length=254)
+    contenu = models.TextField(default='')
+
+    def __str__(self):
+        return self.pseudo
