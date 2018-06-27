@@ -29,7 +29,7 @@
 	<div class="clear"></div>
 
 	{% for comment in commentaires %}
-		{% if comment.is_visible %}
+		{% if comment.is_visible and comment.article_id == article.id %}
 		<div class="commentaire">		
 			<p>{{ comment.pseudo }}, le {{ comment.date }}</p>
 			<p>{{ comment.contenu }}</p>

@@ -4,6 +4,7 @@ from .models import Article, Comment
 from .forms import CommentForm
 
 
+
 def accueil(request):
     """
     Affiche les 5 derniers articles du blog. Nous n'avons pas encore
@@ -46,4 +47,5 @@ def lire_article(request, slug):
     """
         
     return render(request, 'blog/lire_article.html', locals())
+
 
