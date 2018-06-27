@@ -1,6 +1,6 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
-from .models import Article
+from .models import Article, Comment
 from .forms import CommentForm
 
 
@@ -22,12 +22,28 @@ def lire_article(request, slug):
     fourni en paramètre
     """
     article = get_object_or_404(Article, slug=slug)
+    commentaires = Comment.objects.all()
 
-    if request.method == "POST":
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            form.save()
-        else:
-            form = CommentForm()
+    form = CommentForm(request.POST or None)
+    if form.is_valid():
+        # form.article = article
+        comment = Comment()
+        comment = form.save(commit=False)
+        comment.article = article
+        comment.save()
+        form = CommentForm() # To show an empty form after sending the comment
+
+    """ 
+    form = CommentForm(request.POST or None)
+    if form.is_valid():
+        comment = Comment()
+        comment.pseudo = form.cleaned_data['pseudo']
+        comment.email = form.cleaned_data['email']
+        comment.article = article
+        comment.contenu = form.cleaned_data['contenu']
+        comment.save()
+        redirect('lire_article', slug)
+    """
+        
     return render(request, 'blog/lire_article.html', locals())
 

@@ -25,7 +25,14 @@ class Comment(models.Model):
     """ Modèle pour les commentaires """
     pseudo = models.CharField(max_length=42)
     email = models.EmailField(max_length=254)
-    contenu = models.TextField(default='')
+    article = models.ForeignKey('Article', on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True, auto_now=False)
+    contenu = models.TextField(null=False, verbose_name="Description")
+    is_visible = models.BooleanField(verbose_name="Commentaire visible ?",
+                                    default=True)
+
+    class Meta:
+        ordering = ['-date']
 
     def __str__(self):
         return self.pseudo
