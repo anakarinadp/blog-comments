@@ -23,7 +23,7 @@ def lire_article(request, slug):
     fourni en paramètre
     """
     article = get_object_or_404(Article, slug=slug)
-    commentaires = Comment.objects.all()
+    commentaires = Comment.objects.filter(article_id=article.id)
 
     form = CommentForm(request.POST or None)
     if form.is_valid():
